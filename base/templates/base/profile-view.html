@@ -1,0 +1,23 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="main-container">
+    <div class="user">
+        <h2>@{{ user.username }}</h2>
+
+        {% if request.user == user %}
+        <br>
+        <a class="box" href="{% url 'update-profile' %}">Edit Profile</a>
+
+        {% endif %}
+    </div>
+
+    <div class="article-box">  
+        <h4>Articles posted by {{ user.username }}</h4>
+        {% for article in user-articles %}
+            {{article}}
+        {% endfor %}
+        
+    </div>
+</main>
+{% endblock content %}

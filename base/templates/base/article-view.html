@@ -1,0 +1,58 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="main-container">
+    <div >
+        {% if request.user == article.author %}
+            <a  class="box" href="{% url 'update-article' article.id %}">Edit</a>
+            <a class="box-black" href="{% url 'delete-article' article.id %}">Delete</a>
+        {% endif %}
+    </div>
+    <div class="article-box">
+        <h1>{{ article.title }}</h1>
+        <h2 class="resume">{{ article.resume }}</h2>
+        <p>Posted by <a href="{% url 'profile' article.author.id %}"> @{{ article.author.username }} </a> - {{ article.updated_at|timesince }}</p>
+    </div>
+
+    
+    <div>
+        <p>{{ article.body }}</p>
+    </div>
+
+    <div>
+        <h3>Topic</h3>
+        <p class="box">{{ article.topic }}</p>
+    </div>
+
+    <div>
+        <h3>Comments...</h3>
+        {% if comments_count > 0 %}
+            <p> {{comments_count}} comments</p>
+            <hr>
+            {% for comment in comments %}
+                <small><a href="{% url 'profile' comment.user.id %}">@{{ comment.user }} </a>-  {{ comment.created_at|timesince }}</small>
+                
+                {% if request.user == comment.user %}
+                    <a href="{% url 'delete-message' comment.id %}">Delete</a>
+                {% endif %}
+                
+                <p>{{ comment.body }}</p>
+                <hr>
+            {% endfor %}
+
+        {% else %}
+            <p>No comments yet...</p>
+        {% endif %}
+
+        {% if request.user.is_authenticated %}
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <input class="search" type="text" name="body" placeholder="Write your message...">
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</main>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+
+<header>
+    <div class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}">Log Out</a>
+
+        
+        {% else %}
+            <a href="{% url 'login' %}">Log In</a>
+        {% endif %}
+        
+
+        <a href="{% url 'create-article' %}"><button class="box">Create Article</button></a>
+
+    </div>
+
+
+</header>

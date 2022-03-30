@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<main class="main-container">
+    <div class="form">
+        <a href="{{request.META.HTTP_REFERER}}">Go Back</a>
+        <h1>Update profile</h1>
+        <form action="" method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-style">
+                <label for="">{{ field.label }}</label>
+                {{ field }}
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="box">Save Changes</button>
+            <button type="reset" class="box-black">Reset</button>
+        </form>
+    </div>
+</main>
+{% endblock content %}
